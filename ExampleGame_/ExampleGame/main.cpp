@@ -1,10 +1,18 @@
 #include <iostream>
 
+#include <External\Qt\Includes.h>
+#include <Engine\GameEngine\Example.h>
+
+
 int main(int argc, char** argv)
 {
-	std::cout << "Hello" << std::endl;
+	QApplication app(argc, argv);
 
-	system("Pause");
+	GLWidget window;
+	window.resize(800, 600);
+	window.show();
+
+	return app.exec();
 
 	return 0;
 }
