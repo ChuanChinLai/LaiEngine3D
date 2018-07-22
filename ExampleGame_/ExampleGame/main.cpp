@@ -1,18 +1,28 @@
 #include <iostream>
 
 #include <External\Qt\Includes.h>
-#include <Engine\GameEngine\Example.h>
+#include <Engine\GameEngine\GLWidget.h>
+#include <Engine\GameEngine\MainWindow.h>
 
+#include <QtWidgets/QMainWindow>
 
 int main(int argc, char** argv)
 {
-	QApplication app(argc, argv);
+	int res = 0;
 
-	GLWidget window;
-	window.resize(800, 600);
-	window.show();
+	{
+		QApplication app(argc, argv);
 
-	return app.exec();
+		MainWindow mainWindow;
+		mainWindow.resize(800, 600);
+		mainWindow.show();
 
-	return 0;
+		res = app.exec();
+	}
+
+#if defined _DEBUG
+	_CrtDumpMemoryLeaks();
+#endif // _DEBUG
+
+	return res;
 }

@@ -9,7 +9,7 @@
     <IntermediateDir>$(TempDir)intermediates\$(ProjectName)\</IntermediateDir>
     <OutputDir>$(TempDir)output\</OutputDir>
     <LicenseDir>$(OutputDir)Licenses\</LicenseDir>
-    <SDLBinDir>$(ExternalDir)SDL2\bin\$(PlatformShortName)\</SDLBinDir>
+    <QtBinDir>$(ExternalDir)Qt\bin\$(PlatformShortName)\</QtBinDir>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(OutputDir)</OutDir>
@@ -44,8 +44,8 @@
       <Value>$(LicenseDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="SDLBinDir">
-      <Value>$(SDLBinDir)</Value>
+    <BuildMacro Include="QtBinDir">
+      <Value>$(QtBinDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

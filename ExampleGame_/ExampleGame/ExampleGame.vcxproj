@@ -102,7 +102,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);$(SolutionDir)External\glm\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>copy "$(TargetPath)" "$(GameInstallDir)$(TargetFileName)" /y</Command>
@@ -129,7 +129,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);$(SolutionDir)External\glm\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>copy "$(TargetPath)" "$(GameInstallDir)$(TargetFileName)" /y</Command>
@@ -160,7 +160,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);$(SolutionDir)External\glm\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>copy "$(TargetPath)" "$(GameInstallDir)$(TargetFileName)" /y</Command>
@@ -191,7 +191,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\Qt\lib\$(PlatformTarget);$(SolutionDir)External\glm\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>copy "$(TargetPath)" "$(GameInstallDir)$(TargetFileName)" /y</Command>
