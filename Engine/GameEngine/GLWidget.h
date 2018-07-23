@@ -3,6 +3,10 @@
 #include <QtWidgets\QOpenGLWidget>
 #include <QtGui\QOpenGLFunctions> 
 
+#include <QtGui\QOpenGLBuffer>
+#include <QtGui\QOpenGLVertexArrayObject>
+#include <QtGui\QOpenGLShaderProgram>
+
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 
@@ -11,6 +15,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 public:
 
 	GLWidget(QWidget *parent = NULL);
+	~GLWidget();
 
 protected:
 
@@ -20,4 +25,14 @@ protected:
 
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
+	
+	void destroy();
+private:
+
+	// OpenGL State Information
+	QOpenGLVertexArrayObject * m_object;
+	QOpenGLShaderProgram *m_program;
+
+	QOpenGLBuffer* m_vertex;
+	QOpenGLBuffer* m_index;
 };
