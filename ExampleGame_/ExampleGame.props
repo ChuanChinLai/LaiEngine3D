@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros">
     <GameName>ExampleGame_</GameName>
     <GameDir>$(SolutionDir)$(GameName)\</GameDir>
-    <GameSourceContentDir>$(GameDir)Content\</GameSourceContentDir>
+    <GameSourceAssetsDir>$(GameDir)Assets\</GameSourceAssetsDir>
     <GameIntermediateDir>$(IntermediateDir)..\$(GameName)\$(ProjectName)\</GameIntermediateDir>
     <GameOutputDir>$(OutputDir)$(GameName)\</GameOutputDir>
     <GameInstallDir>$(TempDir)$(GameName)\</GameInstallDir>
@@ -28,8 +28,8 @@
       <Value>$(GameDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="GameSourceContentDir">
-      <Value>$(GameSourceContentDir)</Value>
+    <BuildMacro Include="GameSourceAssetsDir">
+      <Value>$(GameSourceAssetsDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="GameIntermediateDir">

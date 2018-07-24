@@ -3,7 +3,7 @@
 #include <QtWidgets\QOpenGLWidget>
 #include <QtGui\QOpenGLFunctions> 
 
-class IGraphicsTopic;
+class IGraphicsProject;
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -26,6 +26,6 @@ protected:
 	
 private:
 
-	IGraphicsTopic* pInstance;
+	IGraphicsProject* pInstance;
 
 };

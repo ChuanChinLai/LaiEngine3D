@@ -1,11 +1,11 @@
 #pragma once
 
-class IGraphicsTopic
+class IGraphicsProject
 {
 public:
-	
-	IGraphicsTopic() {};
-	virtual ~IGraphicsTopic() {};
+
+	IGraphicsProject() {};
+	virtual ~IGraphicsProject() {};
 
 	virtual bool Init() = 0;
 	virtual void Update() = 0;

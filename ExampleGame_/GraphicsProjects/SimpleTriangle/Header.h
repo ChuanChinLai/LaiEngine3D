@@ -1,13 +1,13 @@
 #pragma once
 
-#include <Engine\Graphics\IGraphicsTopic\IGraphicsTopic.h>
+#include <Engine\Graphics\IGraphicsProject\IGraphicsProject.h>
 
 class QOpenGLVertexArrayObject;
 class QOpenGLShaderProgram;
 class QOpenGLBuffer;
 
 
-class SimpleTriangle : public IGraphicsTopic
+class SimpleTriangle : public IGraphicsProject
 {
 public:
 

@@ -30,7 +30,6 @@ void GLWidget::initializeGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	pInstance->Init();
-
 }
 
 void GLWidget::resizeGL(int w, int h)
