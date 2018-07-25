@@ -39,6 +39,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleTriangle", "ExampleGa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGraphicsProject", "Engine\Graphics\IGraphicsProject\IGraphicsProject.vcxproj", "{4FDB5AE3-115C-400C-B9D4-B29D33E2C28A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphics", "Engine\Graphics\Graphics\Graphics.vcxproj", "{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -119,6 +121,14 @@ Global
 		{4FDB5AE3-115C-400C-B9D4-B29D33E2C28A}.Release|x64.Build.0 = Release|x64
 		{4FDB5AE3-115C-400C-B9D4-B29D33E2C28A}.Release|x86.ActiveCfg = Release|Win32
 		{4FDB5AE3-115C-400C-B9D4-B29D33E2C28A}.Release|x86.Build.0 = Release|Win32
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Debug|x64.ActiveCfg = Debug|x64
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Debug|x64.Build.0 = Debug|x64
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Debug|x86.ActiveCfg = Debug|Win32
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Debug|x86.Build.0 = Debug|Win32
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Release|x64.ActiveCfg = Release|x64
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Release|x64.Build.0 = Release|x64
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Release|x86.ActiveCfg = Release|Win32
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +143,7 @@ Global
 		{CE8F622B-6981-448C-841D-BAF410475F4D} = {5A8E5466-95A4-4ABE-A607-1ABEE4FFF851}
 		{A1936161-9F8D-44C9-B6C3-E7BB0F8B1F6D} = {DC3686B0-0E79-45A8-98CF-E228D44A7EE7}
 		{4FDB5AE3-115C-400C-B9D4-B29D33E2C28A} = {5A8E5466-95A4-4ABE-A607-1ABEE4FFF851}
+		{BEF57903-DA04-4111-A2B4-D64B12C5BFA9} = {5A8E5466-95A4-4ABE-A607-1ABEE4FFF851}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7423EA4-3FF2-401C-8A84-56A431B2D5A7}

@@ -1,8 +1,9 @@
 #include "Header.h"
 
+#include "Engine\Graphics\Graphics\Effect.h"
+
 #include <QtGui\QOpenGLBuffer>
 #include <QtGui\QOpenGLVertexArrayObject>
-#include <QtGui\QOpenGLShaderProgram>
 
 #include <iostream>
 
@@ -32,11 +33,8 @@ bool SimpleTriangle::Init()
 
 	{
 		// Create Shader (Do not release until VAO is created)
-		m_program = new QOpenGLShaderProgram();
-		m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, "Assets/shaders/simple.vert");
-		m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "Assets/shaders/simple.frag");
-		m_program->link();
-		m_program->bind();
+		m_effect = new Engine::Graphics::Effect("Assets/shaders/simple.vs", "Assets/shaders/simple.fs");
+		m_effect->Bind();
 	}
 
 	{
@@ -85,30 +83,30 @@ bool SimpleTriangle::Init()
 	}
 
 
-	m_program->enableAttributeArray(0);
-	m_program->enableAttributeArray(1);
-
-	m_program->setAttributeBuffer(0, GL_FLOAT, 0, 3, 24);
-	m_program->setAttributeBuffer(1, GL_FLOAT, 12, 3, 24);
+	m_effect->EnableAttributeArray(0);
+	m_effect->EnableAttributeArray(1);
+	m_effect->SetAttributeBuffer(0, GL_FLOAT, 0, 3, 24);
+	m_effect->SetAttributeBuffer(1, GL_FLOAT, 12, 3, 24);
 
 	// Release (unbind) all
 	m_object->release();
 	m_vertex->release();
 	m_index->release();
-	m_program->release();
+
+	m_effect->UnBind();
 
 	return true;
 }
 
 void SimpleTriangle::Update()
 {
-	m_program->bind();
+	m_effect->Bind();
 	{
 		m_object->bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 		m_object->release();
 	}
-	m_program->release();
+	m_effect->UnBind();
 }
 
 bool SimpleTriangle::Destroy()
@@ -119,9 +117,9 @@ bool SimpleTriangle::Destroy()
 		delete m_object;
 	}
 
-	if (m_program != nullptr)
+	if (m_effect != nullptr)
 	{
-		delete m_program;
+		delete m_effect;
 	}
 
 	if (m_vertex != nullptr)
