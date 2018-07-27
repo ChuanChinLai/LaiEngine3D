@@ -19,9 +19,12 @@ namespace Engine
 			void EnableAttributeArray(const int index);
 			void SetAttributeBuffer(const int location, const GLenum type, const int offset, const int tupleSize, const int stride = 0);
 
+			int GetUniformLocation(const QString& name) const;
+			void SetUniformValue(int location, GLint value);
+
 		private:
 
-			QOpenGLShaderProgram* m_program;
+			QOpenGLShaderProgram* m_pShaderProgram;
 		};
 	}
 }

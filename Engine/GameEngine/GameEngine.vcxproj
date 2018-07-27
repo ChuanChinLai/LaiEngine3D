@@ -228,9 +228,6 @@
     <ProjectReference Include="..\..\ExampleGame_\GraphicsProjects\SimpleTriangle\SimpleTriangle.vcxproj">
       <Project>{a1936161-9f8d-44c9-b6c3-e7bb0f8b1f6d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Graphics\Graphics\Graphics.vcxproj">
-      <Project>{bef57903-da04-4111-a2b4-d64b12c5bfa9}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

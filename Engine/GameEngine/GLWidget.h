@@ -3,7 +3,7 @@
 #include <QtWidgets\QOpenGLWidget>
 #include <QtGui\QOpenGLFunctions> 
 
-class IGraphicsProject;
+class IGTopic;
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -15,6 +15,8 @@ public:
 	GLWidget(QWidget *parent = NULL);
 	~GLWidget();
 
+	void ActiveTexture(GLenum texture);
+
 protected:
 
 	void initializeGL() override;
@@ -23,9 +25,9 @@ protected:
 
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
-	
+
 private:
 
-	IGraphicsProject* pInstance;
+	IGTopic* pInstance;
 
 };

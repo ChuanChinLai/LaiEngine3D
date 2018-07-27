@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine\Graphics\IGraphicsProject\IGraphicsProject.h>
+#include <Engine\Graphics\IGTopic.h>
 
 class QOpenGLVertexArrayObject;;
 class QOpenGLBuffer;
@@ -14,11 +14,11 @@ namespace Engine
 }
 
 
-class SimpleTriangle : public IGraphicsProject
+class SimpleTriangle : public IGTopic
 {
 public:
 
-	SimpleTriangle();
+	SimpleTriangle(GLWidget* i_pGLWidget);
 	~SimpleTriangle();
 
 	bool Init() override;

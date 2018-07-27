@@ -1,24 +1,31 @@
 #include "Header.h"
 
-#include "Engine\Graphics\Graphics\Effect.h"
+#include <Engine\Graphics\Effect.h>
+#include <Engine\Graphics\Texture.h>
+
+#include <Engine\GameEngine\GLWidget.h>
 
 #include <QtGui\QOpenGLBuffer>
 #include <QtGui\QOpenGLVertexArrayObject>
 
+
 #include <iostream>
 
+Engine::Graphics::Texture* pTexture0;
+Engine::Graphics::Texture* pTexture1;
+
 // Create a colored triangle
-static const float sg_vertexes[] = { 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                                     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                                    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-                                    -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f };
+static const float sg_vertexes[] = { 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  1.0f,  1.0f,
+                                     0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,  1.0f, -1.0f,
+                                    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, -1.0f,
+                                    -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, -1.0f,  1.0f};
 
 
 static const unsigned int sg_indices[] = { 0, 3, 1, 1, 3, 2 };
 
 
 
-SimpleTriangle::SimpleTriangle()
+SimpleTriangle::SimpleTriangle(GLWidget* i_pGLWidget) : IGTopic(i_pGLWidget)
 {
 
 }
@@ -30,10 +37,12 @@ SimpleTriangle::~SimpleTriangle()
 
 bool SimpleTriangle::Init()
 {
+	pTexture0 = new Engine::Graphics::Texture("Assets/Textures/awesomeface.png");
+	pTexture1 = new Engine::Graphics::Texture("Assets/Textures/wall.jpg");
 
 	{
 		// Create Shader (Do not release until VAO is created)
-		m_effect = new Engine::Graphics::Effect("Assets/shaders/simple.vs", "Assets/shaders/simple.fs");
+		m_effect = new Engine::Graphics::Effect("Assets/Shaders/simpleTexture.vs", "Assets/Shaders/simpleTexture.fs");
 		m_effect->Bind();
 	}
 
@@ -85,8 +94,15 @@ bool SimpleTriangle::Init()
 
 	m_effect->EnableAttributeArray(0);
 	m_effect->EnableAttributeArray(1);
-	m_effect->SetAttributeBuffer(0, GL_FLOAT, 0, 3, 24);
-	m_effect->SetAttributeBuffer(1, GL_FLOAT, 12, 3, 24);
+	m_effect->EnableAttributeArray(2);
+
+	m_effect->SetAttributeBuffer(0, GL_FLOAT,  0, 3, 32);
+	m_effect->SetAttributeBuffer(1, GL_FLOAT, 12, 3, 32);
+	m_effect->SetAttributeBuffer(2, GL_FLOAT, 24, 2, 32);
+
+	
+	m_effect->SetUniformValue(m_effect->GetUniformLocation("Texture0"), 0);
+	m_effect->SetUniformValue(m_effect->GetUniformLocation("Texture1"), 1);
 
 	// Release (unbind) all
 	m_object->release();
@@ -103,6 +119,13 @@ void SimpleTriangle::Update()
 	m_effect->Bind();
 	{
 		m_object->bind();
+		
+		m_pGLWidget->ActiveTexture(GL_TEXTURE0);
+		pTexture0->Bind();
+
+		m_pGLWidget->ActiveTexture(GL_TEXTURE1);
+		pTexture1->Bind();
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 		m_object->release();
 	}
@@ -111,6 +134,9 @@ void SimpleTriangle::Update()
 
 bool SimpleTriangle::Destroy()
 {
+	if (pTexture0) delete pTexture0;
+	if (pTexture1) delete pTexture1;
+
 	if (m_object != nullptr)
 	{
 		m_object->destroy();
