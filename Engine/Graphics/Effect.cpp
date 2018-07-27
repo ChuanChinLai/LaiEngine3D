@@ -67,3 +67,21 @@ void Engine::Graphics::Effect::SetUniformValue(int location, GLint value)
 	if (m_pShaderProgram != nullptr)
 		return m_pShaderProgram->setUniformValue(location, value);
 }
+
+void Engine::Graphics::Effect::SetUniformValue(int location, const QVector3D & value)
+{
+	if (m_pShaderProgram != nullptr)
+		return m_pShaderProgram->setUniformValue(location, value);
+}
+
+void Engine::Graphics::Effect::SetUniformValue(int location, const QVector4D & value)
+{
+	if (m_pShaderProgram != nullptr)
+		return m_pShaderProgram->setUniformValue(location, value);
+}
+
+void Engine::Graphics::Effect::SetUniformValue(int location, const QMatrix4x4 & value)
+{
+	if (m_pShaderProgram != nullptr)
+		return m_pShaderProgram->setUniformValue(location, value);
+}

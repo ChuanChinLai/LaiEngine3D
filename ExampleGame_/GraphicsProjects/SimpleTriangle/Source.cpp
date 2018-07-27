@@ -120,10 +120,10 @@ void SimpleTriangle::Update()
 	{
 		m_object->bind();
 		
-		m_pGLWidget->ActiveTexture(GL_TEXTURE0);
+		GetWidget()->ActiveTexture(GL_TEXTURE0);
 		pTexture0->Bind();
 
-		m_pGLWidget->ActiveTexture(GL_TEXTURE1);
+		GetWidget()->ActiveTexture(GL_TEXTURE1);
 		pTexture1->Bind();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);

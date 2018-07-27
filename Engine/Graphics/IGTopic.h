@@ -12,9 +12,10 @@ public:
 	virtual bool Init() = 0;
 	virtual void Update() = 0;
 	virtual bool Destroy() = 0;
+	
+	GLWidget* GetWidget() const { return m_pGLWidget; };
 
-
-protected:
+private:
 
 	GLWidget* m_pGLWidget;
 };
