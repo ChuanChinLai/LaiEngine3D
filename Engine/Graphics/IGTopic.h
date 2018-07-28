@@ -1,6 +1,8 @@
 #pragma once
 
 class GLWidget;
+class QKeyEvent;
+class QMouseEvent;
 
 class IGTopic
 {
@@ -13,6 +15,10 @@ public:
 	virtual void Update() = 0;
 	virtual bool Destroy() = 0;
 	
+	//virtual void KeyPressEvent(QKeyEvent* event) = 0;
+	//virtual void MousePressEvent(QMouseEvent *event) = 0;
+	virtual void MouseMoveEvent(QMouseEvent *event) = 0;
+
 	GLWidget* GetWidget() const { return m_pGLWidget; };
 
 private:

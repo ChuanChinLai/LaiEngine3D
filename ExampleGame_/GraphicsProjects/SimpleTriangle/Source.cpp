@@ -5,14 +5,21 @@
 
 #include <Engine\GameEngine\GLWidget.h>
 
+#include <QtGui\QMouseEvent>
 #include <QtGui\QOpenGLBuffer>
 #include <QtGui\QOpenGLVertexArrayObject>
-
+#include <QtGui\QMatrix4x4>
 
 #include <iostream>
 
 Engine::Graphics::Texture* pTexture0;
 Engine::Graphics::Texture* pTexture1;
+
+
+QMatrix4x4 m_Translation;
+QMatrix4x4 m_Rotation;
+QMatrix4x4 m_Scale;
+
 
 // Create a colored triangle
 static const float sg_vertexes[] = { 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  1.0f,  1.0f,
@@ -104,6 +111,12 @@ bool SimpleTriangle::Init()
 	m_effect->SetUniformValue(m_effect->GetUniformLocation("Texture0"), 0);
 	m_effect->SetUniformValue(m_effect->GetUniformLocation("Texture1"), 1);
 
+
+	m_effect->SetUniformValue(m_effect->GetUniformLocation("Translation"), m_Translation);
+	m_effect->SetUniformValue(m_effect->GetUniformLocation("Rotation"), m_Rotation);
+	m_effect->SetUniformValue(m_effect->GetUniformLocation("Scale"), m_Scale);
+
+
 	// Release (unbind) all
 	m_object->release();
 	m_vertex->release();
@@ -125,6 +138,26 @@ void SimpleTriangle::Update()
 
 		GetWidget()->ActiveTexture(GL_TEXTURE1);
 		pTexture1->Bind();
+
+
+		{
+			QMatrix4x4 MatModel = m_Translation * m_Rotation * m_Scale;
+			m_effect->SetUniformValue(m_effect->GetUniformLocation("MatModel"), MatModel);
+
+			QMatrix4x4 MatCamera;
+			MatCamera.lookAt(QVector3D(0.0f, 0.0f, 2.0f), QVector3D(0.0f, 0.0f, 0.0f), QVector3D(0.0f, 1.0f, 0.0f));
+			m_effect->SetUniformValue(m_effect->GetUniformLocation("MatCamera"), MatCamera);
+
+			QMatrix4x4 MatProjected;
+			MatProjected.perspective(45.0f, 1.0f, 0.1f, 100.0f);
+			m_effect->SetUniformValue(m_effect->GetUniformLocation("MatProjected"), MatProjected);
+
+
+			QMatrix4x4 res = MatProjected * MatCamera * MatModel;
+
+			int end = -1;
+		}
+
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 		m_object->release();
@@ -161,5 +194,10 @@ bool SimpleTriangle::Destroy()
 	}
 
 	return true;
+}
+
+void SimpleTriangle::MouseMoveEvent(QMouseEvent* event)
+{
+	printf("%d, %d\n", event->x(), event->y());
 }
 

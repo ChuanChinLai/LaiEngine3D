@@ -52,7 +52,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-//	printf("%d, %d\n", event->x(), event->y());
+	pInstance->MouseMoveEvent(event);
 }
 
 void GLWidget::ActiveTexture(GLenum texture)

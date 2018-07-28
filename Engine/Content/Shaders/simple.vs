@@ -6,6 +6,6 @@ out vec4 vertexColor;
  
 void main()
 {
-  gl_Position = vec4(i_position, 1.0);
+  gl_Position = Translation * Rotation * Scale * vec4(i_position, 1.0);
   vertexColor = vec4(i_color, 1.0);
 }

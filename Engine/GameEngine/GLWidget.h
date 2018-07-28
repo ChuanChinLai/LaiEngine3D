@@ -29,5 +29,4 @@ protected:
 private:
 
 	IGTopic* pInstance;
-
 };

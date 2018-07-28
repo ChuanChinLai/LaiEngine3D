@@ -6,6 +6,8 @@
 #include <QtWidgets\QPushButton>
 #include <QtGui\QMouseEvent>
 
+#include <iostream>
+
 Window::Window(MainWindow* parent) : pMainWindow(parent)
 {
 	pGLWidget = new GLWidget(this);
@@ -27,7 +29,7 @@ void Window::keyPressEvent(QKeyEvent * event)
 		pMainWindow->close();
 		break;
 	default:
-		event->ignore();
+		std::cout << event->key() << std::endl;
 		break;
 	}
 }

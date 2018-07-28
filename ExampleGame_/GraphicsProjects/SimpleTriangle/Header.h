@@ -25,6 +25,8 @@ public:
 	void Update() override;
 	bool Destroy() override;
 
+	void MouseMoveEvent(QMouseEvent *event) override;
+
 private:
 
 	// OpenGL State Information
