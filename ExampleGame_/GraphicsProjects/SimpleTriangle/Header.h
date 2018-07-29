@@ -29,10 +29,5 @@ public:
 
 private:
 
-	// OpenGL State Information
-	QOpenGLVertexArrayObject* m_object;
 	Engine::Graphics::Effect* m_effect;
-
-	QOpenGLBuffer* m_vertex;
-	QOpenGLBuffer* m_index;
 };
