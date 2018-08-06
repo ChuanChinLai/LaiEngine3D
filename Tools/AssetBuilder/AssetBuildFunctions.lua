@@ -43,58 +43,28 @@ do
 	end
 
 	-- Copy Shaders
-
 	do
 		local errorMessage
 
-		local sourceFilePath = EngineSourceContentDir .. "Shaders\\"
-
 		local builtPath = GameInstallDir .. "Assets\\"
 		CreateDirectoryIfItDoesntExist( builtPath )
-		builtPath = builtPath .. "Shaders\\"
-		CreateDirectoryIfItDoesntExist( builtPath )
 
-		local Files = GetFilesInDirectory( sourceFilePath )
-
-		for i, File in ipairs( Files ) do
-			local sourceFileName = File:sub( #sourceFilePath + 1 )
-			local targetPath = builtPath .. sourceFileName
-				
-			local result, errorMessage = CopyFile(File, targetPath)
-
-			if result then
-				print( "Copied " .. sourceFileName )
-			else
-				OutputMessage( "The file couldn't be copied to \"" .. targetPath .. "\": " .. errorMessage )
-			end
-		end
-	end
-
-
-	do
-		local errorMessage
-
-		local sourceFilePath = EngineSourceContentDir .. "Models\\"
-
-		local builtPath = GameInstallDir .. "Assets\\"
-		CreateDirectoryIfItDoesntExist( builtPath )
-		builtPath = builtPath .. "Models\\"
-		CreateDirectoryIfItDoesntExist( builtPath )
-
+		local sourceFilePath = EngineSourceContentDir
 		local Files = GetFilesInDirectory( sourceFilePath )
 
 		for i, File in ipairs( Files ) do
 
-			local result = IsDirectory(File)
+			if IsDirectory(File) then
 
-			if (result == true) then
 				local directoryName = File:sub( #sourceFilePath + 1 )
 				local targetPath = builtPath .. directoryName .. '\\'
 				CreateDirectoryIfItDoesntExist( targetPath )
+
 			else
+
 				local sourceFileName = File:sub( #sourceFilePath + 1 )
 				local targetPath = builtPath .. sourceFileName
-				
+
 				local result, errorMessage = CopyFile(File, targetPath)
 
 				if result then
@@ -105,37 +75,6 @@ do
 			end
 		end
 	end
-
-
-
-
-	do
-		local errorMessage
-
-		local sourceFilePath = EngineSourceContentDir .. "Textures\\"
-
-		local builtPath = GameInstallDir .. "Assets\\"
-		CreateDirectoryIfItDoesntExist( builtPath )
-		builtPath = builtPath .. "Textures\\"
-		CreateDirectoryIfItDoesntExist( builtPath )
-
-		local Files = GetFilesInDirectory( sourceFilePath )
-
-		for i, File in ipairs( Files ) do
-			local sourceFileName = File:sub( #sourceFilePath + 1 )
-			local targetPath = builtPath .. sourceFileName
-				
-			local result, errorMessage = CopyFile(File, targetPath)
-
-			if result then
-				print( "Copied " .. sourceFileName )
-			else
-				OutputMessage( "The file couldn't be copied to \"" .. targetPath .. "\": " .. errorMessage )
-			end
-		end
-	end
-
-
 
 
 	-- Copy Qt .dll file

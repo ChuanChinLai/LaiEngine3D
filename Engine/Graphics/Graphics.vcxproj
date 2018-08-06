@@ -191,7 +191,6 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="IGTopic.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshLoader\cyTriMesh.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFormats.h" />
     <ClInclude Include="VertexFormats.h" />

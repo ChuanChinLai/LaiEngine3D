@@ -1,6 +1,5 @@
 #include "Effect.h"
 
-
 #include <QtGui\QOpenGLFunctions> 
 #include <QtGui\QOpenGLShaderProgram>
 

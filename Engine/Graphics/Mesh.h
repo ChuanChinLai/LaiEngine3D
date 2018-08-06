@@ -1,11 +1,9 @@
 #pragma once
 
 #include "VertexFormats.h"
-#include "TextureFormats.h"
 
 #include <vector>
 
-class GLWidget;
 
 class QOpenGLVertexArrayObject;
 class QOpenGLBuffer;

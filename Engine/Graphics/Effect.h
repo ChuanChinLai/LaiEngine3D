@@ -28,7 +28,7 @@ namespace Engine
 
 		private:
 
-			QOpenGLShaderProgram * m_pShaderProgram;
+			QOpenGLShaderProgram* m_pShaderProgram;
 
 			Effect(const QString& vShaderName, const QString& fShaderName);
 			~Effect();

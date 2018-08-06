@@ -1,9 +1,10 @@
 #include "Mesh.h"
 
-#include <Engine\GameEngine\GLWidget.h>
 #include <Engine\Graphics\Effect.h>
 #include <Engine\Graphics\Texture.h>
-#include <Engine\Graphics\MeshLoader\cyTriMesh.h>
+#include <Engine\GameEngine\GLWidget.h>
+
+#include <External\cyCodeBase\cyTriMesh.h>
 
 #include <QtGui\QOpenGLBuffer>
 #include <QtGui\QOpenGLVertexArrayObject>
@@ -207,7 +208,8 @@ void Engine::Graphics::Mesh::Render()
 			m_pEffect->SetUniformValue(m_pEffect->GetUniformLocation("texture_diffuse1"), static_cast<GLint>(0));
 
 			// and finally bind the texture
-			pGLFunctions->glBindTexture(GL_TEXTURE_2D, m_textures[i]->GetTextureId());
+			if(m_textures[i] != nullptr)
+				pGLFunctions->glBindTexture(GL_TEXTURE_2D, m_textures[i]->GetTextureId());
 
 			glDrawElements(GL_TRIANGLES, pointsPerFace * faceCount, GL_UNSIGNED_INT, (void*)(pointsPerFace * firstFace * sizeof(GLuint)));
 		}
