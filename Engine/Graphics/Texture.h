@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QtCore\QString>
-
-class QOpenGLTexture;
+#include <QtGui\QOpenGLTexture>
 
 namespace Engine
 {
@@ -11,14 +10,19 @@ namespace Engine
 		class Texture
 		{
 		public:
-			Texture(QString imageName);
-			~Texture();
+
+			static bool Create(Texture*& o_texture, const QString& imageName);
+			static bool Destroy(Texture*& o_texture);
 
 			void Bind();
+			GLuint GetTextureId() const;
 
 		private:
 
-			QOpenGLTexture* pTexture;
+			QOpenGLTexture* m_pTexture;
+
+			Texture(const QString& imageName);
+			~Texture();
 		};
 	}
 }

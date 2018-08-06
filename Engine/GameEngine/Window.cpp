@@ -8,15 +8,15 @@
 
 #include <iostream>
 
-Window::Window(MainWindow* parent) : pMainWindow(parent)
+Window::Window(MainWindow* parent) : m_pMainWindow(parent)
 {
-	pGLWidget = new GLWidget(this);
+	m_pGLWidget = new GLWidget(this);
 
 	QGridLayout* pLayout = new QGridLayout(this);
-	pLayout->addWidget(pGLWidget, 0, 0);
+	pLayout->addWidget(m_pGLWidget, 0, 0);
 
-	QPushButton* button = new QPushButton(this);
-	pLayout->addWidget(button, 2, 0);
+	QPushButton* pButton = new QPushButton(this);
+	pLayout->addWidget(pButton, 2, 0);
 
 	setLayout(pLayout);
 }
@@ -26,7 +26,7 @@ void Window::keyPressEvent(QKeyEvent * event)
 	switch (event->key())
 	{
 	case Qt::Key_Escape:
-		pMainWindow->close();
+		m_pMainWindow->close();
 		break;
 	default:
 		std::cout << event->key() << std::endl;

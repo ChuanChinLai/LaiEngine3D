@@ -18,10 +18,10 @@ public:
 
 protected:
 
-	void keyPressEvent(QKeyEvent *event) override;
+	void keyPressEvent(QKeyEvent* event) override;
 
 private:
 
-	MainWindow* pMainWindow;
-	GLWidget* pGLWidget;
+	MainWindow* m_pMainWindow;
+	GLWidget* m_pGLWidget;
 };

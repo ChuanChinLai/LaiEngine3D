@@ -28,6 +28,7 @@ namespace
 	int LuaCopyFile(lua_State* io_luaState);
 	int LuaCreateDirectoryIfItDoesntExist(lua_State* io_luaState);
 	int LuaGetFilesInDirectory(lua_State* io_luaState);
+	int LuaIsDirectory(lua_State* io_luaState);
 	int LuaOutputMessage(lua_State* io_luaState);
 }
 
@@ -59,6 +60,7 @@ int main(int i_argumentCount, char** i_arguments)
 		lua_register(luaState, "CopyFile", LuaCopyFile);
 		lua_register(luaState, "CreateDirectoryIfItDoesntExist", LuaCreateDirectoryIfItDoesntExist);
 		lua_register(luaState, "GetFilesInDirectory", LuaGetFilesInDirectory);
+		lua_register(luaState, "IsDirectory", LuaIsDirectory);
 		lua_register(luaState, "OutputMessage", LuaOutputMessage);
 	}
 
@@ -289,6 +291,27 @@ namespace
 			errorMessage += i_path;
 			return luaL_error(io_luaState, "Error");
 		}
+	}
+
+	int LuaIsDirectory(lua_State * io_luaState)
+	{
+		// Argument #1: The path
+		const char* i_path = nullptr;
+
+		if (lua_isstring(io_luaState, 1))
+		{
+			i_path = lua_tostring(io_luaState, 1);
+		}
+		else
+		{
+			return luaL_error(io_luaState, "Argument #1 must be a string (instead of a %s)", luaL_typename(io_luaState, 1));
+		}
+
+		int result = std::experimental::filesystem::is_directory(i_path);
+
+		lua_pushboolean(io_luaState, result ? true : false);
+		constexpr int returnValueCount = 1;
+		return returnValueCount;
 	}
 
 	int LuaOutputMessage(lua_State* io_luaState)

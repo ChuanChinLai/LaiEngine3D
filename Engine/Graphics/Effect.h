@@ -11,8 +11,8 @@ namespace Engine
 		{
 		public:
 
-			Effect(QString vShaderName, QString fShaderName);
-			~Effect();
+			static bool Create(Effect*& o_effect, const QString& vShaderName, const QString& fShaderName);
+			static bool Destroy(Effect*& o_effect);
 
 			void Bind() const;
 			void UnBind() const;
@@ -28,7 +28,10 @@ namespace Engine
 
 		private:
 
-			QOpenGLShaderProgram* m_pShaderProgram;
+			QOpenGLShaderProgram * m_pShaderProgram;
+
+			Effect(const QString& vShaderName, const QString& fShaderName);
+			~Effect();
 		};
 	}
 }

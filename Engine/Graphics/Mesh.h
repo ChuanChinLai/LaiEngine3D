@@ -5,42 +5,55 @@
 
 #include <vector>
 
+class GLWidget;
+
 class QOpenGLVertexArrayObject;
 class QOpenGLBuffer;
+
+namespace cy
+{
+	class TriMesh;
+}
+
 
 namespace Engine
 {
 	namespace Graphics
 	{
 		class Effect;
+		class Texture;
 
 		class Mesh
 		{
 		public:
 
-			Mesh(const std::vector<VertexFormats::sMesh>& vertices,
-				 const std::vector<unsigned int>& indices, 
-				 const std::vector<TextureFormats::sTexture>& textures);
+            static bool Create(Mesh*& o_mesh, std::string objName);
+			static bool Destroy(Mesh*& o_mesh);
 
-			~Mesh();
-
-
-			void Init(Effect* effect);
+			bool BindShader(Effect* effect);
 			void Render();
-			void Destroy();
-
-
-			std::vector<VertexFormats::sMesh> m_vertices;
-			std::vector<unsigned int> m_indices;
-			std::vector<TextureFormats::sTexture> m_textures;
 
 		private:
+
+			void InterpretObjData();
+			std::vector<Engine::Graphics::VertexFormats::sMesh> InterpretVertexData();
+			std::vector<Engine::Graphics::Texture*> InterpretTextureData();
+
+			cy::TriMesh* m_pMesh;
+			Effect* m_pEffect;
 
 			QOpenGLVertexArrayObject* m_pVertexArrayObject;
 			QOpenGLBuffer* m_pVertexBuffer;
 			QOpenGLBuffer* m_pIndexBuffer;
 
-			Effect* m_pEffect;
+			std::string m_directory;
+
+			std::vector<VertexFormats::sMesh> m_vertices;
+			std::vector<Engine::Graphics::Texture*> m_textures;
+			std::vector<unsigned int> m_indices;
+
+			Mesh();
+			~Mesh();
 		};
 	}
 }

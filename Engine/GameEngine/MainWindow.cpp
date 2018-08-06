@@ -3,6 +3,6 @@
 
 MainWindow::MainWindow()
 {
-	pWindow = new Window(this);
-	setCentralWidget(pWindow);
+	m_pWindow = new Window(this);
+	setCentralWidget(m_pWindow);
 }

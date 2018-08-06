@@ -15,5 +15,5 @@ public:
 
 private:
 
-	Window* pWindow;
+	Window* m_pWindow;
 };

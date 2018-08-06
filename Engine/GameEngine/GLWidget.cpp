@@ -11,13 +11,13 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
 	setMouseTracking(true);
 
-	pInstance = new SimpleTriangle(this);
+	m_pInstance = new SimpleTriangle(this);
 }
 
 GLWidget::~GLWidget()
 {
-	if (pInstance != nullptr)
-		delete pInstance;
+	if (m_pInstance != nullptr)
+		delete m_pInstance;
 }
 
 void GLWidget::initializeGL()
@@ -25,11 +25,10 @@ void GLWidget::initializeGL()
 	initializeOpenGLFunctions();
 	
 	glEnable(GL_CULL_FACE);
-
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	pInstance->Init();
+	m_pInstance->Init();
 }
 
 void GLWidget::resizeGL(int w, int h)
@@ -41,7 +40,7 @@ void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	pInstance->Update();
+	m_pInstance->Update();
 }
 
 
@@ -52,10 +51,5 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	pInstance->MouseMoveEvent(event);
-}
-
-void GLWidget::ActiveTexture(GLenum texture)
-{
-	glActiveTexture(texture);
+	m_pInstance->MouseMoveEvent(event);
 }

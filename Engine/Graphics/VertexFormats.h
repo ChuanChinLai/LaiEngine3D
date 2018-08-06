@@ -20,9 +20,9 @@ namespace Engine
 			{
 				QVector3D Position;
 				QVector3D Normal;
-				QVector2D UV;
-//				QVector3D Tangent;
-//				QVector3D Bitangent;
+				QVector3D UV;
+				QVector3D Tangent;
+				QVector3D Bitangent;
 			};
 		}
 	}

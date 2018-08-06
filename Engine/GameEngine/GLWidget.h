@@ -5,17 +5,15 @@
 
 class IGTopic;
 
-class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class GLWidget : public QOpenGLWidget, public QOpenGLFunctions
 {
 
 //	Q_OBJECT // must include this if you use Qt signals/slots
 
 public:
 
-	GLWidget(QWidget *parent = NULL);
+	GLWidget(QWidget* parent = nullptr);
 	~GLWidget();
-
-	void ActiveTexture(GLenum texture);
 
 protected:
 
@@ -28,5 +26,5 @@ protected:
 
 private:
 
-	IGTopic* pInstance;
+	IGTopic* m_pInstance;
 };

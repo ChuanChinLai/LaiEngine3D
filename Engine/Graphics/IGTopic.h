@@ -19,8 +19,6 @@ public:
 	//virtual void MousePressEvent(QMouseEvent *event) = 0;
 	virtual void MouseMoveEvent(QMouseEvent *event) = 0;
 
-	GLWidget* GetWidget() const { return m_pGLWidget; };
-
 private:
 
 	GLWidget* m_pGLWidget;

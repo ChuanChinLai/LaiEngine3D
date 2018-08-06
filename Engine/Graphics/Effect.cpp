@@ -7,24 +7,22 @@
 #include <iostream>
 #include <cassert>
 
-Engine::Graphics::Effect::Effect(QString vShaderName, QString fShaderName) : m_pShaderProgram(new QOpenGLShaderProgram)
+bool Engine::Graphics::Effect::Create(Effect *& o_effect, const QString& vShaderName, const QString& fShaderName)
 {
-	bool success = true;
+	if (o_effect != nullptr)
+		delete o_effect;
 
-	success = m_pShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, vShaderName);
-	if (!success) assert(false);
+	o_effect = new Effect(vShaderName, fShaderName);
 
-	success = m_pShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, fShaderName);
-	if (!success) assert(false);
-
-	success = m_pShaderProgram->link();
-	if (!success) assert(false);
+	return true;
 }
 
-Engine::Graphics::Effect::~Effect()
+bool Engine::Graphics::Effect::Destroy(Effect *& o_effect)
 {
-	if (m_pShaderProgram != nullptr)
-		delete m_pShaderProgram;
+	if (o_effect != nullptr)
+		delete o_effect;
+
+	return true;
 }
 
 void Engine::Graphics::Effect::Bind() const
@@ -84,4 +82,24 @@ void Engine::Graphics::Effect::SetUniformValue(int location, const QMatrix4x4 & 
 {
 	if (m_pShaderProgram != nullptr)
 		return m_pShaderProgram->setUniformValue(location, value);
+}
+
+Engine::Graphics::Effect::Effect(const QString& vShaderName, const QString& fShaderName) : m_pShaderProgram(new QOpenGLShaderProgram)
+{
+	bool success = true;
+
+	success = m_pShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, vShaderName);
+	if (!success) assert(false);
+
+	success = m_pShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, fShaderName);
+	if (!success) assert(false);
+
+	success = m_pShaderProgram->link();
+	if (!success) assert(false);
+}
+
+Engine::Graphics::Effect::~Effect()
+{
+	if (m_pShaderProgram != nullptr)
+		delete m_pShaderProgram;
 }

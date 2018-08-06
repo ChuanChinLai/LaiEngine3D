@@ -1,10 +1,14 @@
-#include <iostream>
-
 #include <External\Qt\Includes.h>
 #include <Engine\GameEngine\GLWidget.h>
 #include <Engine\GameEngine\MainWindow.h>
 
 #include <QtWidgets/QMainWindow>
+
+#include <iostream>
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h>  
+
 
 int main(int argc, char** argv)
 {
