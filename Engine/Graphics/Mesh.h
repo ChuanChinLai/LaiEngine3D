@@ -1,8 +1,10 @@
 #pragma once
 
 #include "VertexFormats.h"
+#include "TextureFormats.h"
 
 #include <vector>
+#include <unordered_map>
 
 
 class QOpenGLVertexArrayObject;
@@ -34,10 +36,13 @@ namespace Engine
 		private:
 
 			void InterpretObjData();
-			std::vector<Engine::Graphics::VertexFormats::sMesh> InterpretVertexData();
-			std::vector<Engine::Graphics::Texture*> InterpretTextureData();
 
-			cy::TriMesh* m_pMesh;
+			void InterpretVertexData();
+			void InterpretTextureData();
+
+			Texture* GetTextureByName(const std::string& texturePath);
+
+			cy::TriMesh* m_pMeshLoader;
 			Effect* m_pEffect;
 
 			QOpenGLVertexArrayObject* m_pVertexArrayObject;
@@ -47,8 +52,10 @@ namespace Engine
 			std::string m_directory;
 
 			std::vector<VertexFormats::sMesh> m_vertices;
-			std::vector<Engine::Graphics::Texture*> m_textures;
+			std::unordered_map<std::string, Engine::Graphics::Texture*> m_textures;
 			std::vector<unsigned int> m_indices;
+			
+			std::unordered_map<unsigned int, std::vector<TextureFormats::sTexture>> m_texture_keys;
 
 			Mesh();
 			~Mesh();

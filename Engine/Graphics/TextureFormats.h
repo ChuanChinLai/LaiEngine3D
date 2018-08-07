@@ -12,10 +12,17 @@ namespace Engine
 		{
 			struct sTexture
 			{
-				Texture* pTexture = nullptr;
-				unsigned int ID;
-				std::string Type;
-				std::string Path;
+				enum class Type
+				{
+					Ambient, 
+					Diffuse, 
+					Specular, 
+					Bump, 
+				};
+
+				unsigned int Id;
+				Type Type;
+				std::string Key;
 			};
 		}
 	}
