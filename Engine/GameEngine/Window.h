@@ -6,6 +6,8 @@
 
 class MainWindow;
 class GLWidget;
+class QVBoxLayout;
+
 
 class Window : public QWidget
 {
@@ -23,5 +25,6 @@ protected:
 private:
 
 	MainWindow* m_pMainWindow;
+
 	GLWidget* m_pGLWidget;
 };

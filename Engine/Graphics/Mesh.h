@@ -16,7 +16,7 @@ namespace cy
 }
 
 
-namespace Engine
+namespace LaiEngine
 {
 	namespace Graphics
 	{
@@ -52,7 +52,7 @@ namespace Engine
 			std::string m_directory;
 
 			std::vector<VertexFormats::sMesh> m_vertices;
-			std::unordered_map<std::string, Engine::Graphics::Texture*> m_textures;
+			std::unordered_map<std::string, LaiEngine::Graphics::Texture*> m_textures;
 			std::vector<unsigned int> m_indices;
 			
 			std::unordered_map<unsigned int, std::vector<TextureFormats::sTexture>> m_texture_keys;

@@ -11,10 +11,10 @@
 
 #include <iostream>
 
-bool Engine::Graphics::Mesh::Create(Mesh*& o_mesh, std::string objName)
+bool LaiEngine::Graphics::Mesh::Create(Mesh*& o_mesh, std::string objName)
 {
 	if (o_mesh != nullptr)
-		delete o_mesh;
+		Destroy(o_mesh);
 
 	o_mesh = new Mesh();
 
@@ -34,15 +34,17 @@ bool Engine::Graphics::Mesh::Create(Mesh*& o_mesh, std::string objName)
 	return true;
 }
 
-bool Engine::Graphics::Mesh::Destroy(Mesh *& o_mesh)
+bool LaiEngine::Graphics::Mesh::Destroy(Mesh *& o_mesh)
 {
 	if (o_mesh != nullptr)
+	{
 		delete o_mesh;
-
+		o_mesh = nullptr;
+	}
 	return true;
 }
 
-bool Engine::Graphics::Mesh::BindShader(Effect* effect)
+bool LaiEngine::Graphics::Mesh::BindShader(Effect* effect)
 {
 	if (effect)
 	{	
@@ -136,7 +138,7 @@ bool Engine::Graphics::Mesh::BindShader(Effect* effect)
 		const GLenum dataType = GL_FLOAT;
 		const int offset = 0;
 		const int tupleSize = 3;
-		const int stride = sizeof(Engine::Graphics::VertexFormats::sMesh);
+		const int stride = sizeof(LaiEngine::Graphics::VertexFormats::sMesh);
 
 		m_pEffect->SetAttributeBuffer(locationID, dataType, offset, tupleSize, stride);
 	}
@@ -149,7 +151,7 @@ bool Engine::Graphics::Mesh::BindShader(Effect* effect)
 		const GLenum dataType = GL_FLOAT;
 		const int offset = 12;
 		const int tupleSize = 3;
-		const int stride = sizeof(Engine::Graphics::VertexFormats::sMesh);
+		const int stride = sizeof(LaiEngine::Graphics::VertexFormats::sMesh);
 
 		m_pEffect->SetAttributeBuffer(locationID, dataType, offset, tupleSize, stride);
 	}
@@ -163,7 +165,7 @@ bool Engine::Graphics::Mesh::BindShader(Effect* effect)
 		const GLenum dataType = GL_FLOAT;
 		const int offset = 24;
 		const int tupleSize = 2;
-		const int stride = sizeof(Engine::Graphics::VertexFormats::sMesh);
+		const int stride = sizeof(LaiEngine::Graphics::VertexFormats::sMesh);
 
 		m_pEffect->SetAttributeBuffer(locationID, dataType, offset, tupleSize, stride);
 	}
@@ -174,10 +176,11 @@ bool Engine::Graphics::Mesh::BindShader(Effect* effect)
 
 	m_pEffect->UnBind();
 
+
 	return true;
 }
 
-void Engine::Graphics::Mesh::Render()
+void LaiEngine::Graphics::Mesh::Render()
 {
 	if (m_pEffect == nullptr)
 	{
@@ -186,32 +189,30 @@ void Engine::Graphics::Mesh::Render()
 	}
 
 	m_pEffect->Bind();
+	m_pVertexArrayObject->bind();
 
+	if (m_pMeshLoader->NM() == 0)
 	{
-		m_pVertexArrayObject->bind();
-
-		QMatrix4x4 q;
-		q.scale(QVector3D(0.1f, 0.1f, 0.1f));
-		q.translate(QVector3D(0, -10.0f, 0));
-		m_pEffect->SetUniformValue(m_pEffect->GetUniformLocation("Scale"), q);
-
+		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, (void*)(0));
+	}
+	else
+	{
 		for (unsigned int i = 0; i < m_pMeshLoader->NM(); i++)
 		{
-			QOpenGLFunctions *pGLFunctions = QOpenGLContext::currentContext()->functions();
-
 			unsigned int ambientNr = 1;
 			unsigned int diffuseNr = 1;
 			unsigned int specularNr = 1;
 			unsigned int bumpNr = 1;
 
-
 			for (size_t j = 0; j < m_texture_keys[i].size(); j++)
 			{
 				const TextureFormats::sTexture& tFormat = m_texture_keys[i][j];
 
+				QOpenGLFunctions *pGLFunctions = QOpenGLContext::currentContext()->functions();
+
 				pGLFunctions->glActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + j));
 
-				std::string textureNameInShader; 
+				std::string textureNameInShader;
 
 				if (tFormat.Type == TextureFormats::sTexture::Type::Ambient)
 					textureNameInShader = "Ambient" + std::to_string(ambientNr++);
@@ -234,23 +235,22 @@ void Engine::Graphics::Mesh::Render()
 
 			glDrawElements(GL_TRIANGLES, pointsPerFace * faceCount, GL_UNSIGNED_INT, (void*)(pointsPerFace * firstFace * sizeof(GLuint)));
 		}
-
-		m_pVertexArrayObject->release();
 	}
 
+	m_pVertexArrayObject->release();
 	m_pEffect->UnBind();
 }
 
-void Engine::Graphics::Mesh::InterpretObjData()
+void LaiEngine::Graphics::Mesh::InterpretObjData()
 {
 //  m_indices made by InterpretVertexData();
 	InterpretVertexData();
 	InterpretTextureData();
 }
 
-void Engine::Graphics::Mesh::InterpretVertexData()
+void LaiEngine::Graphics::Mesh::InterpretVertexData()
 {
-	std::vector<Engine::Graphics::VertexFormats::sMesh> vertexData(m_pMeshLoader->NF());
+	std::vector<LaiEngine::Graphics::VertexFormats::sMesh> vertexData(m_pMeshLoader->NF());
 
 	for (unsigned int i = 0; i < m_pMeshLoader->NF(); i++)
 	{
@@ -285,7 +285,7 @@ void Engine::Graphics::Mesh::InterpretVertexData()
 	m_vertices = vertexData;
 }
 
-void Engine::Graphics::Mesh::InterpretTextureData()
+void LaiEngine::Graphics::Mesh::InterpretTextureData()
 {
 	TextureFormats::sTexture tFormat;
 
@@ -339,13 +339,13 @@ void Engine::Graphics::Mesh::InterpretTextureData()
 	}
 }
 
-Engine::Graphics::Texture* Engine::Graphics::Mesh::GetTextureByName(const std::string& texturePath)
+LaiEngine::Graphics::Texture* LaiEngine::Graphics::Mesh::GetTextureByName(const std::string& texturePath)
 {
 	if (m_textures.count(texturePath) == 0)
 	{
-		Engine::Graphics::Texture* pTexture = nullptr;
+		LaiEngine::Graphics::Texture* pTexture = nullptr;
 
-		if (!Engine::Graphics::Texture::Create(pTexture, texturePath.c_str()))
+		if (!LaiEngine::Graphics::Texture::Create(pTexture, texturePath.c_str()))
 			assert(false);
 
 		m_textures[texturePath] = pTexture;
@@ -354,41 +354,48 @@ Engine::Graphics::Texture* Engine::Graphics::Mesh::GetTextureByName(const std::s
 	return m_textures[texturePath];
 }
 
-Engine::Graphics::Mesh::Mesh() : m_pVertexArrayObject(nullptr), m_pVertexBuffer(nullptr), m_pIndexBuffer(nullptr)
+LaiEngine::Graphics::Mesh::Mesh() : m_pVertexArrayObject(nullptr), m_pVertexBuffer(nullptr), m_pIndexBuffer(nullptr)
 {
 
 }
 
 
-Engine::Graphics::Mesh::~Mesh()
+LaiEngine::Graphics::Mesh::~Mesh()
 {
 	if (m_pMeshLoader)
 	{
 		delete m_pMeshLoader;
+		m_pMeshLoader = nullptr;
 	}
 
 	if (m_pVertexArrayObject)
 	{
 		m_pVertexArrayObject->destroy();
 		delete m_pVertexArrayObject;
+		m_pVertexArrayObject = nullptr;
 	}
 
 	if (m_pVertexBuffer)
 	{
 		m_pVertexBuffer->destroy();
 		delete m_pVertexBuffer;
+		m_pVertexBuffer = nullptr;
 	}
 
 	if (m_pIndexBuffer)
 	{
 		m_pIndexBuffer->destroy();
 		delete m_pIndexBuffer;
+		m_pIndexBuffer = nullptr;
 	}
 
 	for (auto& texture : m_textures)
 	{
 		if (texture.second != nullptr)
+		{
 			Texture::Destroy(texture.second);
+		}
 	}
 
+	m_textures.clear();
 }

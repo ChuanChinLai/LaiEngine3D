@@ -2,7 +2,7 @@
 #include "ExampleGame_\GraphicsProjects\SimpleTriangle\Header.h"
 
 #include <QtGui\QMouseEvent>
-
+#include <QtCore\Qtimer>
 #include <iostream>
 #include <cassert>
 
@@ -41,8 +41,17 @@ void GLWidget::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	m_pInstance->Update();
+
+//	m_pInstance->PaintGL();
 }
 
+
+void GLWidget::keyPressEvent(QKeyEvent * event)
+{
+	m_pInstance->KeyPressEvent(event);
+
+	update();
+}
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {

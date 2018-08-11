@@ -3,11 +3,10 @@
 #include <QtWidgets\QOpenGLWidget>
 #include <QtGui\QOpenGLFunctions> 
 
-class IGTopic;
+class IScene;
 
 class GLWidget : public QOpenGLWidget, public QOpenGLFunctions
 {
-
 //	Q_OBJECT // must include this if you use Qt signals/slots
 
 public:
@@ -19,12 +18,15 @@ protected:
 
 	void initializeGL() override;
 	void resizeGL(int w, int h) override;
-	void paintGL() override;
 
+	void keyPressEvent(QKeyEvent* event) override;
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 
+	void paintGL() override;
+
 private:
 
-	IGTopic* m_pInstance;
+	friend class Window;
+	IScene* m_pInstance;
 };

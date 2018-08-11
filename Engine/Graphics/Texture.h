@@ -3,7 +3,7 @@
 #include <QtCore\QString>
 #include <QtGui\QOpenGLTexture>
 
-namespace Engine
+namespace LaiEngine
 {
 	namespace Graphics
 	{

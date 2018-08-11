@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Engine\Graphics\IGTopic.h>
+#include <Engine\Graphics\IScene.h>
 
 class QOpenGLVertexArrayObject;;
 class QOpenGLBuffer;
 
-namespace Engine
+namespace LaiEngine
 {
 	namespace Graphics
 	{
@@ -14,7 +14,7 @@ namespace Engine
 }
 
 
-class SimpleTriangle : public IGTopic
+class SimpleTriangle : public IScene
 {
 public:
 
@@ -25,6 +25,7 @@ public:
 	void Update() override;
 	bool Destroy() override;
 
+	void KeyPressEvent(QKeyEvent* event) override;
 	void MouseMoveEvent(QMouseEvent* event) override;
 
 private:

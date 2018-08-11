@@ -12,6 +12,6 @@ uniform sampler2D Bump1;
 
 void main()
 {
-    o_color = texture(Diffuse1, vertexUV) + texture(Bump1, vertexUV);
-//	o_color = vertexColor;
+//    o_color = texture(Diffuse1, vertexUV) + texture(Bump1, vertexUV);
+	o_color = vec4(1, 0, 0, 0);
 }

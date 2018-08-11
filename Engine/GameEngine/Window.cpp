@@ -1,6 +1,7 @@
 #include "GLWidget.h"
 #include "Window.h"
 #include "MainWindow.h"
+#include "InspectorWindow.h"
 
 #include <QtWidgets\QGridLayout>
 #include <QtWidgets\QPushButton>
@@ -10,15 +11,15 @@
 
 Window::Window(MainWindow* parent) : m_pMainWindow(parent)
 {
+	QHBoxLayout* mainLayout = new QHBoxLayout(this);
+
 	m_pGLWidget = new GLWidget(this);
+	mainLayout->addWidget(m_pGLWidget);
 
-	QGridLayout* pLayout = new QGridLayout(this);
-	pLayout->addWidget(m_pGLWidget, 0, 0);
+	InspectorWindow* m_pGLWidget1 = new InspectorWindow(this);
+	mainLayout->addWidget(m_pGLWidget1);
 
-	QPushButton* pButton = new QPushButton(this);
-	pLayout->addWidget(pButton, 2, 0);
-
-	setLayout(pLayout);
+	setLayout(mainLayout);
 }
 
 void Window::keyPressEvent(QKeyEvent * event)
@@ -29,7 +30,7 @@ void Window::keyPressEvent(QKeyEvent * event)
 		m_pMainWindow->close();
 		break;
 	default:
-		std::cout << event->key() << std::endl;
+		m_pGLWidget->keyPressEvent(event);
 		break;
 	}
 }

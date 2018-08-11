@@ -3,7 +3,7 @@
 #include <QtGui\QVector2D>
 #include <QtGui\QVector3D>
 
-namespace Engine
+namespace LaiEngine
 {
 	namespace Graphics
 	{

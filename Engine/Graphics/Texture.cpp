@@ -1,43 +1,48 @@
 #include "Texture.h"
 
 
-bool Engine::Graphics::Texture::Create(Texture *& o_texture, const QString & imageName)
+bool LaiEngine::Graphics::Texture::Create(Texture *& o_texture, const QString & imageName)
 {
 	if (o_texture != nullptr)
-		delete o_texture;
+		Destroy(o_texture);
 
 	o_texture = new Texture(imageName);
 
 	return true;
 }
 
-bool Engine::Graphics::Texture::Destroy(Texture *& o_texture)
+bool LaiEngine::Graphics::Texture::Destroy(Texture *& o_texture)
 {
-	if (o_texture != nullptr) 
+	if (o_texture != nullptr)
+	{
 		delete o_texture;
-
+		o_texture = nullptr;
+	}
 	return true;
 }
 
-void Engine::Graphics::Texture::Bind()
+void LaiEngine::Graphics::Texture::Bind()
 {
 	if (m_pTexture != nullptr)
 		m_pTexture->bind();
 }
 
-GLuint Engine::Graphics::Texture::GetTextureId() const
+GLuint LaiEngine::Graphics::Texture::GetTextureId() const
 {
 	return m_pTexture->textureId();
 }
 
-Engine::Graphics::Texture::Texture(const QString& imageName) : m_pTexture(new QOpenGLTexture(QImage(imageName).mirrored()))
+LaiEngine::Graphics::Texture::Texture(const QString& imageName) : m_pTexture(new QOpenGLTexture(QImage(imageName).mirrored()))
 {
 	if (m_pTexture == nullptr)
 		assert(false);
 }
 
-Engine::Graphics::Texture::~Texture()
+LaiEngine::Graphics::Texture::~Texture()
 {
 	if (m_pTexture != nullptr)
+	{
 		delete m_pTexture;
+		m_pTexture = nullptr;
+	}
 }
