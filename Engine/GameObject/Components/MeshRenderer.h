@@ -15,7 +15,7 @@ namespace LaiEngine
 
 		MeshRenderer(GameObject* object) : IComponent(object), m_pMesh(nullptr)
 		{
-			m_GUID = "{04C0DAC2-4289-4920-8279-7CEFCF7A6A1B}";
+			m_Type = Type::MeshRenderer;
 		};
 
 

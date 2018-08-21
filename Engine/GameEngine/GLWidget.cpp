@@ -11,7 +11,7 @@ GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
 	setMouseTracking(true);
 
-	m_pInstance = new SimpleTriangle(this);
+	m_pInstance = new LaiEngine::SimpleTriangle(this);
 }
 
 GLWidget::~GLWidget()
@@ -41,16 +41,15 @@ void GLWidget::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	m_pInstance->Update();
-
-//	m_pInstance->PaintGL();
 }
 
 
 void GLWidget::keyPressEvent(QKeyEvent * event)
 {
-	m_pInstance->KeyPressEvent(event);
-
-	update();
+	if (m_pInstance->KeyPressEvent(event))
+	{
+		update();
+	}
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)

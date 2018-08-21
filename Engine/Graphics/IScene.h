@@ -8,50 +8,34 @@ class QMouseEvent;
 
 namespace LaiEngine
 {
-	class GameObject;
-
 	namespace Graphics
 	{
 		class Effect;
 	}
 }
 
-
-class IScene
+namespace LaiEngine
 {
-public:
+	class GameObject;
+	class Camera; 
 
-	struct sObjectRequiredToRenderAFrame
+	class IScene
 	{
-		sObjectRequiredToRenderAFrame(LaiEngine::Graphics::Effect* effect, LaiEngine::GameObject* object)
-		{
-			pEffect = effect;
-			pGameObject = object;
-		}
+	public:
 
-		LaiEngine::Graphics::Effect* pEffect;
-		LaiEngine::GameObject* pGameObject;
+		IScene(GLWidget* i_pGLWidget) : m_pGLWidget(i_pGLWidget) {};
+		virtual ~IScene() {};
+
+		virtual bool Init() = 0;
+		virtual void Update() = 0;
+		virtual bool Destroy() = 0;
+
+		virtual bool KeyPressEvent(QKeyEvent* event) = 0;
+		//virtual void MousePressEvent(QMouseEvent *event) = 0;
+		virtual void MouseMoveEvent(QMouseEvent *event) = 0;
+
+	private:
+
+		GLWidget* m_pGLWidget;
 	};
-
-	IScene(GLWidget* i_pGLWidget) : m_pGLWidget(i_pGLWidget) {};
-	virtual ~IScene() {};
-
-	virtual bool Init() = 0;
-	virtual void Update() = 0;
-	virtual bool Destroy() = 0;
-	
-	virtual void KeyPressEvent(QKeyEvent* event) = 0;
-	//virtual void MousePressEvent(QMouseEvent *event) = 0;
-	virtual void MouseMoveEvent(QMouseEvent *event) = 0;
-
-
-	void PaintGL();
-	void SubmitObjectToBeRendered(LaiEngine::Graphics::Effect* effect, LaiEngine::GameObject* object);
-
-
-private:
-
-	std::vector<sObjectRequiredToRenderAFrame> m_DataRequiredToRenderAFrame;
-
-	GLWidget * m_pGLWidget;
-};
+}

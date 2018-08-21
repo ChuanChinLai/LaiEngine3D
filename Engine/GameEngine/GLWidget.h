@@ -3,7 +3,11 @@
 #include <QtWidgets\QOpenGLWidget>
 #include <QtGui\QOpenGLFunctions> 
 
-class IScene;
+namespace LaiEngine
+{
+	class IScene;
+}
+
 
 class GLWidget : public QOpenGLWidget, public QOpenGLFunctions
 {
@@ -28,5 +32,5 @@ protected:
 private:
 
 	friend class Window;
-	IScene* m_pInstance;
+	LaiEngine::IScene* m_pInstance;
 };

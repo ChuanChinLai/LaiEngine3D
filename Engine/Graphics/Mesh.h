@@ -31,6 +31,8 @@ namespace LaiEngine
 			static bool Destroy(Mesh*& o_mesh);
 
 			bool BindShader(Effect* effect);
+			Effect* GetShader() const;
+
 			void Render();
 
 		private:

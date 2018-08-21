@@ -13,21 +13,23 @@ namespace LaiEngine
 	}
 }
 
-
-class SimpleTriangle : public IScene
+namespace LaiEngine
 {
-public:
+	class SimpleTriangle : public IScene
+	{
+	public:
 
-	SimpleTriangle(GLWidget* i_pGLWidget);
-	~SimpleTriangle();
+		SimpleTriangle(GLWidget* i_pGLWidget);
+		~SimpleTriangle();
 
-	bool Init() override;
-	void Update() override;
-	bool Destroy() override;
+		bool Init() override;
+		void Update() override;
+		bool Destroy() override;
 
-	void KeyPressEvent(QKeyEvent* event) override;
-	void MouseMoveEvent(QMouseEvent* event) override;
+		bool KeyPressEvent(QKeyEvent* event) override;
+		void MouseMoveEvent(QMouseEvent* event) override;
 
-private:
+	private:
 
-};
+	};
+}

@@ -180,6 +180,11 @@ bool LaiEngine::Graphics::Mesh::BindShader(Effect* effect)
 	return true;
 }
 
+LaiEngine::Graphics::Effect* LaiEngine::Graphics::Mesh::GetShader() const
+{
+	return m_pEffect;
+}
+
 void LaiEngine::Graphics::Mesh::Render()
 {
 	if (m_pEffect == nullptr)

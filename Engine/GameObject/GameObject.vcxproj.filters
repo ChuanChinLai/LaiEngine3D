@@ -12,10 +12,21 @@
     <ClInclude Include="Components\MeshRenderer.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Camera_inline.h" />
+    <ClInclude Include="Components\Light.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Components\MeshRenderer.cpp" />
+    <ClCompile Include="Components\MeshRenderer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Components\Light.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

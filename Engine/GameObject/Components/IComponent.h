@@ -10,6 +10,15 @@ namespace LaiEngine
 	{
 	public:
 
+		enum class Type
+		{
+			Transform, 
+			MeshRenderer, 
+			Light, 
+			Null
+		};
+
+
 		virtual void Update() = 0;
 
 		inline GameObject* GetGameObject() const
@@ -17,21 +26,21 @@ namespace LaiEngine
 			return m_pGameObject;
 		};
 
-		inline std::string GetGUID() const
+		inline Type GetType() const
 		{ 
-			return m_GUID;
+			return m_Type;
 		};
 
 	protected:
 
-		IComponent(GameObject* object) : m_pGameObject(object), m_GUID("")
+		IComponent(GameObject* object) : m_pGameObject(object), m_Type(Type::Null)
 		{
 
 		}
 
 
 		GameObject* m_pGameObject;
-		std::string m_GUID;
+		Type m_Type;
 
 	};
 }

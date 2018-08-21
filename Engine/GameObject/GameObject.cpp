@@ -5,18 +5,11 @@
 
 LaiEngine::GameObject::GameObject() : Transform(new LaiEngine::Transform(this))
 {
-
+	m_Components[IComponent::Type::Transform] = Transform;
 }
 
 LaiEngine::GameObject::~GameObject()
 {
-	if (Transform != nullptr)
-	{
-		delete Transform;
-		Transform = nullptr;
-	}
-
-
 	for (auto component : m_Components)
 	{
 		if (component.second != nullptr)

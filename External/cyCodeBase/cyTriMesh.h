@@ -265,7 +265,7 @@ inline bool TriMesh::LoadFromFileObj( const char *filename, bool loadMtl, std::o
 {
 	FILE *fp = fopen(filename,"r");
 	if ( !fp ) {
-		if ( outStream ) *outStream << "ERROR: Cannot open file " << filename << std::endl;
+		if ( outStream ) *outStream << "ERROR: Cannot open file " << filename << " (not exist)" << std::endl;
 		return false;
 	}
 

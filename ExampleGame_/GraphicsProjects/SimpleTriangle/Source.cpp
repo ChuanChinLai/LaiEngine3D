@@ -9,6 +9,8 @@
 #include <Engine\Graphics\Mesh.h>
 #include <Engine\GameEngine\GLWidget.h>
 #include <Engine\GameObject\GameObject.h>
+#include <Engine\GameObject\Camera.h>
+
 #include <Engine\GameObject\Components\MeshRenderer.h>
 #include <Engine\GameObject\Components\Transform.h>
 
@@ -22,30 +24,25 @@
 #include <memory>
 
 
-QVector3D cameraPosition(0, 0, 0);
-QVector3D objScale(0.01f, 0.01f, 0.01f);
-
-QMatrix4x4 modelMat;
-QMatrix4x4 viewMat;
-QMatrix4x4 projectedMat;
-
 
 LaiEngine::Graphics::Mesh* pMesh;
 LaiEngine::Graphics::Effect* pEffect;
 
 LaiEngine::GameObject* pGameObject;
+LaiEngine::Camera* pCamera;
 
-SimpleTriangle::SimpleTriangle(GLWidget* i_pGLWidget) : IScene(i_pGLWidget)
+
+LaiEngine::SimpleTriangle::SimpleTriangle(GLWidget* i_pGLWidget) : IScene(i_pGLWidget)
 {
 
 }
 
-SimpleTriangle::~SimpleTriangle()
+LaiEngine::SimpleTriangle::~SimpleTriangle()
 {
 	Destroy();
 }
 
-bool SimpleTriangle::Init()
+bool LaiEngine::SimpleTriangle::Init()
 {
 	{
 		LaiEngine::Graphics::Effect::Create(pEffect, "Assets/Shaders/simple.vs", "Assets/Shaders/simple.fs");
@@ -53,7 +50,7 @@ bool SimpleTriangle::Init()
 
 
 //	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/nanosuit/nanosuit.obj"))
-	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/teapot.obj"))
+	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/sphere.obj"))
 	{
 		pMesh->BindShader(pEffect);
 	}
@@ -64,60 +61,67 @@ bool SimpleTriangle::Init()
 	LaiEngine::MeshRenderer* pMeshRenderer = pGameObject->GetComponent<LaiEngine::MeshRenderer>();
 	pMeshRenderer->SetMesh(pMesh);
 
-	pGameObject->Transform->m_Scale = QVector3D(0.01f, 0.01f, 0.01f);
+	pGameObject->Transform->Scale = QVector3D(0.1f, 0.1f, 0.1f);
 
+	LaiEngine::Camera::Create(pCamera);
+	pCamera->SetSpeed(1.0f);
+	pCamera->SetPosition(QVector3D(0, 200, 200));
+	pCamera->SetRotation(QVector3D(-45.0f, 0, 0));
 
 	return true;
 }
 
-void SimpleTriangle::Update()
+void LaiEngine::SimpleTriangle::Update()
 {
 	std::cout << "Update" << std::endl;
-	SubmitObjectToBeRendered(pEffect, pGameObject);
 
-	pEffect->Bind();
-
-	modelMat.scale(QVector3D(0.1f, 0.1f, 0.1f));
-//	viewMat.lookAt(QVector3D(0, 0, 500.0f), QVector3D(0, 0, 0), QVector3D(0, 1, 0));
-//	projectedMat.perspective(1.0f, 1.0f, 0.1f, 1000.0f);
-
-
-	pEffect->SetUniformValue(pEffect->GetUniformLocation("modelMat"), modelMat);
-
-
-//	pEffect->SetUniformValue(pEffect->GetUniformLocation("viewMat"), viewMat);
-//	pEffect->SetUniformValue(pEffect->GetUniformLocation("projectedMat"), projectedMat);
-
-	pMesh->Render();
+	pGameObject->Update();
 }
 
 
-bool SimpleTriangle::Destroy()
+bool LaiEngine::SimpleTriangle::Destroy()
 {
 	LaiEngine::Graphics::Effect::Destroy(pEffect);
 	LaiEngine::Graphics::Mesh::Destroy(pMesh);
 
 	delete pGameObject;
+	delete pCamera;
 
 	return true;
 }
 
-void SimpleTriangle::KeyPressEvent(QKeyEvent * event)
+bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 {
 	std::cout << event->key() << std::endl;
 
 	if (event->key() == Qt::Key_W)
 	{
-		cameraPosition = QVector3D(0, 0.01f, 0);
+		pCamera->MoveForward();
+		return true;
 	}
 
 	if (event->key() == Qt::Key_S)
 	{
-		cameraPosition = QVector3D(0, -0.01f, 0);
+		pCamera->MoveBackward();
+		return true;
 	}
+
+	if (event->key() == Qt::Key_A)
+	{
+		pCamera->MoveLeft();
+		return true;
+	}
+
+	if (event->key() == Qt::Key_D)
+	{
+		pCamera->MoveRight();
+		return true;
+	}
+
+	return false;
 }
 
-void SimpleTriangle::MouseMoveEvent(QMouseEvent* event)
+void LaiEngine::SimpleTriangle::MouseMoveEvent(QMouseEvent* event)
 {
 //	printf("%d, %d\n", event->x(), event->y());
 }

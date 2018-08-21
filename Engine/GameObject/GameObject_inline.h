@@ -8,11 +8,11 @@ inline void LaiEngine::GameObject::AddComponent()
 {
 	IComponent* pComponent = new T(this);
 
-	const std::string& Guid = pComponent->GetGUID();
+	const IComponent::Type& type = pComponent->GetType();
 
-	if (m_Components[Guid] == nullptr)
+	if (m_Components[type] == nullptr)
 	{
-		m_Components[Guid] = pComponent;
+		m_Components[type] = pComponent;
 	}
 	else
 	{
@@ -25,9 +25,9 @@ inline T* LaiEngine::GameObject::GetComponent()
 {
 	IComponent* pDummy = new T(this);
 
-	const std::string& Guid = pDummy->GetGUID();
+	const IComponent::Type& type = pDummy->GetType();
 
-	T* pComponent = dynamic_cast<T*>(m_Components[Guid]);
+	T* pComponent = dynamic_cast<T*>(m_Components[type]);
 
 	delete pDummy;
 

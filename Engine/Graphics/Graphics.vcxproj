@@ -184,7 +184,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>

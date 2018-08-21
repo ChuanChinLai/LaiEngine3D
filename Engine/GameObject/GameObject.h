@@ -16,7 +16,7 @@ namespace LaiEngine
 		GameObject();
 		~GameObject();
 
-		Transform* Transform;
+		Transform* const Transform;
 
 		void Update();
 
@@ -34,7 +34,7 @@ namespace LaiEngine
 		GameObject(const GameObject& i_Object);
 		GameObject& operator =  (const GameObject& i_Object);
 
-		std::unordered_map<std::string, IComponent*> m_Components;
+		std::unordered_map<IComponent::Type, IComponent*> m_Components;
 	};
 }
 

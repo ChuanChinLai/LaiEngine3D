@@ -10,9 +10,9 @@ namespace LaiEngine
 	{
 	public:
 
-		Transform(GameObject* object) : IComponent(object), m_Position(), m_Rotation(), m_Scale(0, 0, 0)
+		Transform(GameObject* object) : IComponent(object), Position(), Rotation(), Scale(1, 1, 1)
 		{
-			m_GUID = "{170A9005-E3D4-4367-B4D6-5012CBD8A0FC}";
+			m_Type = Type::Transform;
 		};
 
 		void Update() override
@@ -21,8 +21,8 @@ namespace LaiEngine
 		}
 
 
-		QVector3D m_Position;
-		QVector3D m_Rotation;
-		QVector3D m_Scale;
+		QVector3D Position;
+		QVector3D Rotation;
+		QVector3D Scale;
 	};
 }
