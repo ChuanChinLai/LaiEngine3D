@@ -14,6 +14,8 @@ bool LaiEngine::Camera::Create(Camera *& o_camera)
 
 
 	o_camera = new Camera;
+	o_camera->m_projectedMat.perspective(1.0f, 1.0f, 0.001f, 100000.0f);
+
 
 	if (main == nullptr)
 		main = o_camera;

@@ -13,6 +13,8 @@ namespace LaiEngine
 		static bool Create(Camera*& o_camera);
 
 		inline QMatrix4x4 GetViewMat() const;
+		inline QMatrix4x4 GetProjectedMat() const;
+
 		inline void SetPosition(const QVector3D& position);
 		inline void SetRotation(const QVector3D& rotation);
 
@@ -40,7 +42,9 @@ namespace LaiEngine
 		QVector3D m_Rotation;
 
 		QMatrix4x4 m_RotationMat;
+
 		QMatrix4x4 m_ViewMat;
+		QMatrix4x4 m_projectedMat;
 		
 		const static QVector3D Up;
 		const static QVector3D Right;

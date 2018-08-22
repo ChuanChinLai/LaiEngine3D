@@ -38,9 +38,16 @@ namespace LaiEngine
 
 		}
 
+		virtual ~IComponent()
+		{
+
+		}
+
 
 		GameObject* m_pGameObject;
 		Type m_Type;
 
+
+		friend class GameObject;
 	};
 }

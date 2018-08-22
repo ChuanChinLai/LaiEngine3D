@@ -21,17 +21,14 @@ void LaiEngine::MeshRenderer::Update()
 	pEffect->Bind();
 
 
-	QMatrix4x4 modelMat;
-	QMatrix4x4 viewMat;
-	QMatrix4x4 projectedMat;
+	QMatrix4x4 S;
+	S.scale(m_pGameObject->Transform->Scale);
+	QMatrix4x4 T;
+	T.translate(m_pGameObject->Transform->Position);
 
-	LaiEngine::GameObject* pGameObject = m_pGameObject;
-
-	modelMat.scale(pGameObject->Transform->Scale);
-
-	viewMat = LaiEngine::Camera::main->GetViewMat();
-
-	projectedMat.perspective(1.0f, 1.0f, 0.001f, 100000.0f);
+	QMatrix4x4 modelMat = T * S;
+	QMatrix4x4 viewMat = LaiEngine::Camera::main->GetViewMat();
+	QMatrix4x4 projectedMat = LaiEngine::Camera::main->GetProjectedMat();
 
 	pEffect->SetUniformValue(pEffect->GetUniformLocation("modelMat"), modelMat);
 	pEffect->SetUniformValue(pEffect->GetUniformLocation("viewMat"), viewMat);
@@ -42,7 +39,7 @@ void LaiEngine::MeshRenderer::Update()
 	pEffect->UnBind();
 }
 
-void LaiEngine::MeshRenderer::SetMesh(Graphics::Mesh * mesh)
+void LaiEngine::MeshRenderer::SetMesh(Graphics::Mesh* mesh)
 {
 	m_pMesh = mesh;
 }

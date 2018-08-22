@@ -7,6 +7,11 @@ inline QMatrix4x4 LaiEngine::Camera::GetViewMat() const
 	return m_ViewMat;
 }
 
+inline QMatrix4x4 LaiEngine::Camera::GetProjectedMat() const
+{
+	return m_projectedMat;
+}
+
 inline void LaiEngine::Camera::SetPosition(const QVector3D & position)
 {
 	m_Position = position;

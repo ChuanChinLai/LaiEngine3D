@@ -11,8 +11,9 @@
 #include <Engine\GameObject\GameObject.h>
 #include <Engine\GameObject\Camera.h>
 
-#include <Engine\GameObject\Components\MeshRenderer.h>
 #include <Engine\GameObject\Components\Transform.h>
+#include <Engine\GameObject\Components\MeshRenderer.h>
+#include <Engine\GameObject\Components\Light.h>
 
 #include <QtGui\QMouseEvent>
 #include <QtGui\QOpenGLBuffer>
@@ -29,6 +30,8 @@ LaiEngine::Graphics::Mesh* pMesh;
 LaiEngine::Graphics::Effect* pEffect;
 
 LaiEngine::GameObject* pGameObject;
+LaiEngine::GameObject* pLightGameObject;
+
 LaiEngine::Camera* pCamera;
 
 
@@ -45,15 +48,23 @@ LaiEngine::SimpleTriangle::~SimpleTriangle()
 bool LaiEngine::SimpleTriangle::Init()
 {
 	{
-		LaiEngine::Graphics::Effect::Create(pEffect, "Assets/Shaders/simple.vs", "Assets/Shaders/simple.fs");
+		LaiEngine::Graphics::Effect::Create(pEffect, "Assets/Shaders/teapot.vs", "Assets/Shaders/teapot.fs");
 	}
 
 
 //	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/nanosuit/nanosuit.obj"))
-	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/sphere.obj"))
+	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/teapot.obj"))
 	{
 		pMesh->BindShader(pEffect);
 	}
+
+
+	{
+		pLightGameObject = new LaiEngine::GameObject();
+		pLightGameObject->Transform->Position = QVector3D(0, 4, 1.5f);
+		pLightGameObject->AddComponent<LaiEngine::Light>();
+	}
+
 
 	pGameObject = new LaiEngine::GameObject();
 	pGameObject->AddComponent<LaiEngine::MeshRenderer>();
@@ -74,7 +85,7 @@ bool LaiEngine::SimpleTriangle::Init()
 void LaiEngine::SimpleTriangle::Update()
 {
 	std::cout << "Update" << std::endl;
-
+	pLightGameObject->Update();
 	pGameObject->Update();
 }
 
@@ -85,6 +96,8 @@ bool LaiEngine::SimpleTriangle::Destroy()
 	LaiEngine::Graphics::Mesh::Destroy(pMesh);
 
 	delete pGameObject;
+	delete pLightGameObject;
+
 	delete pCamera;
 
 	return true;

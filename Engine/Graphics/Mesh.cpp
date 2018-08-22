@@ -130,7 +130,7 @@ bool LaiEngine::Graphics::Mesh::BindShader(Effect* effect)
 		}
 	}
 
-	//EnableAttribute: xyz
+	//EnableAttribute: position
 	{
 		const int locationID = 0;
 		m_pEffect->EnableAttributeArray(locationID);
@@ -143,7 +143,7 @@ bool LaiEngine::Graphics::Mesh::BindShader(Effect* effect)
 		m_pEffect->SetAttributeBuffer(locationID, dataType, offset, tupleSize, stride);
 	}
 
-	//EnableAttribute: rgb
+	//EnableAttribute: normal vector
 	{
 		const int locationID = 1;
 		m_pEffect->EnableAttributeArray(locationID);

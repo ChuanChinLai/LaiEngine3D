@@ -9,16 +9,15 @@ namespace LaiEngine
 	namespace Graphics
 	{
 		class Mesh;
+		class Effect;
 	}
 
 	class Light : public IComponent
 	{
 	public:
 
-		Light(GameObject* object) : IComponent(object)
-		{
-			m_Type = Type::Light;
-		};
+		Light(GameObject* object);
+		~Light();
 
 
 		void Update() override;
@@ -30,6 +29,7 @@ namespace LaiEngine
 
 		QVector4D m_color;
 
-		Graphics::Mesh* m_pMesh;
+		Graphics::Effect* m_pEffect;
+		Graphics::Mesh*   m_pMesh;
 	};
 }

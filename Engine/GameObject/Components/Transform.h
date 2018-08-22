@@ -10,7 +10,7 @@ namespace LaiEngine
 	{
 	public:
 
-		Transform(GameObject* object) : IComponent(object), Position(), Rotation(), Scale(1, 1, 1)
+		Transform(GameObject* object) : IComponent(object), Position(0, 0, 0), Rotation(0, 0, 0), Scale(1, 1, 1)
 		{
 			m_Type = Type::Transform;
 		};
