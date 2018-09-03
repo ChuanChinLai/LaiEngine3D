@@ -2,6 +2,16 @@
 
 #include "Camera.h"
 
+inline QVector3D LaiEngine::Camera::GetPosition() const
+{
+	return m_Position;
+}
+
+inline QVector3D LaiEngine::Camera::GetRotation() const
+{
+	return m_Rotation;
+}
+
 inline QMatrix4x4 LaiEngine::Camera::GetViewMat() const
 {
 	return m_ViewMat;
@@ -82,4 +92,9 @@ inline void LaiEngine::Camera::MoveRight()
 
 	m_Position = Translation * m_Position;
 	UpdateViewMat();
+}
+
+inline void LaiEngine::Camera::MoveUp()
+{
+
 }

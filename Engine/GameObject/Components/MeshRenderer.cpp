@@ -27,7 +27,9 @@ void LaiEngine::MeshRenderer::Update()
 	T.translate(m_pGameObject->Transform->Position);
 
 	QMatrix4x4 modelMat = T * S;
+
 	QMatrix4x4 viewMat = LaiEngine::Camera::main->GetViewMat();
+
 	QMatrix4x4 projectedMat = LaiEngine::Camera::main->GetProjectedMat();
 
 	pEffect->SetUniformValue(pEffect->GetUniformLocation("modelMat"), modelMat);

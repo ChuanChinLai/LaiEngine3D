@@ -12,6 +12,9 @@ namespace LaiEngine
 
 		static bool Create(Camera*& o_camera);
 
+		inline QVector3D GetPosition() const;
+		inline QVector3D GetRotation() const;
+
 		inline QMatrix4x4 GetViewMat() const;
 		inline QMatrix4x4 GetProjectedMat() const;
 
@@ -19,6 +22,9 @@ namespace LaiEngine
 		inline void SetRotation(const QVector3D& rotation);
 
 		inline void SetSpeed(const float speed);
+
+		void LookAt(const QVector3D& eye, const QVector3D& target, const QVector3D& up);
+
 		void MoveForward();
 		void MoveBackward();
 		void MoveLeft();
@@ -26,7 +32,10 @@ namespace LaiEngine
 		void MoveUp();
 		void MoveDown();
 
-
+		const static QVector3D Up;
+		const static QVector3D Right;
+		const static QVector3D Forward;
+		const static QVector3D Backward;
 
 
 	private:
@@ -45,11 +54,7 @@ namespace LaiEngine
 
 		QMatrix4x4 m_ViewMat;
 		QMatrix4x4 m_projectedMat;
-		
-		const static QVector3D Up;
-		const static QVector3D Right;
-		const static QVector3D Forward;
-		const static QVector3D Backward;
+	
 	};
 }
 

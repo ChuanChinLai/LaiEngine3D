@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-const QVector3D LaiEngine::Camera::Up       = QVector3D( 0.0f,  1.0f,  0.0f );
+const QVector3D LaiEngine::Camera::Up       = QVector3D( 0.0f,  1.0f,  0.01f );
 const QVector3D LaiEngine::Camera::Right    = QVector3D( 1.0f,  0.0f,  0.0f );
 const QVector3D LaiEngine::Camera::Forward  = QVector3D( 0.0f,  0.0f, -1.0f );
 const QVector3D LaiEngine::Camera::Backward = QVector3D( 0.0f,  0.0f,  1.0f );
@@ -14,7 +14,7 @@ bool LaiEngine::Camera::Create(Camera *& o_camera)
 
 
 	o_camera = new Camera;
-	o_camera->m_projectedMat.perspective(1.0f, 1.0f, 0.001f, 100000.0f);
+	o_camera->m_projectedMat.perspective(45.0f, 1.0f, 0.0f, 1000.0f);
 
 
 	if (main == nullptr)
@@ -23,20 +23,39 @@ bool LaiEngine::Camera::Create(Camera *& o_camera)
 	return true;
 }
 
-
-LaiEngine::Camera::Camera() : m_speed(1.0f)
+void LaiEngine::Camera::LookAt(const QVector3D& eye, const QVector3D& target, const QVector3D& up)
 {
-	UpdateRotationMat();
-	UpdateViewMat();
+	m_Position = eye;
+
+	QVector3D forward = (target - eye).normalized();
+	QVector3D side = QVector3D::crossProduct(forward, up).normalized();
+	QVector3D upVector = QVector3D::crossProduct(side, forward).normalized();
+
+	//QMatrix4x4 m(side.x(), upVector.x(), -forward.x(), 0.0f, 
+	//	         side.y(), upVector.y(), -forward.y(), 0.0f, 
+	//	         side.z(), upVector.z(), -forward.z(), 0.0f, 
+	//	             0.0f,         0.0f,         0.0f, 1.0f);
+
+
+	QMatrix4x4 m(    side.x(),     side.y(),     side.z(), 0.0f,
+		         upVector.x(), upVector.y(), upVector.z(), 0.0f,
+		         -forward.x(), -forward.y(), -forward.z(), 0.0f,
+		                 0.0f,         0.0f,         0.0f, 1.0f);
+
+
+
+	m_ViewMat.setToIdentity();
+	m_ViewMat *= m;
+	m_ViewMat.translate(-eye);
 }
+
 
 void LaiEngine::Camera::UpdateViewMat()
 {
 	QVector3D cameraForward = m_RotationMat * Forward;
 	QVector3D cameraTarget = m_Position + cameraForward;
 
-	m_ViewMat.setToIdentity();
-	m_ViewMat.lookAt(m_Position, cameraTarget, Up);
+	LookAt(m_Position, cameraTarget, Up);
 }
 
 void LaiEngine::Camera::UpdateRotationMat()
@@ -44,4 +63,10 @@ void LaiEngine::Camera::UpdateRotationMat()
 	m_RotationMat.setToIdentity();
 	m_RotationMat.rotate(m_Rotation.x(), QVector3D(1.0f, 0, 0));
 	m_RotationMat.rotate(m_Rotation.y(), QVector3D(0, 1.0f, 0));
+}
+
+
+LaiEngine::Camera::Camera() : m_speed(1.0f)
+{
+	LookAt(QVector3D(0, 0, 0), Forward, Up);
 }

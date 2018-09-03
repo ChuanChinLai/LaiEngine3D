@@ -255,7 +255,8 @@ void LaiEngine::Graphics::Mesh::InterpretObjData()
 
 void LaiEngine::Graphics::Mesh::InterpretVertexData()
 {
-	std::vector<LaiEngine::Graphics::VertexFormats::sMesh> vertexData(m_pMeshLoader->NF());
+
+	std::vector<LaiEngine::Graphics::VertexFormats::sMesh> vertexData(m_pMeshLoader->NV());
 
 	for (unsigned int i = 0; i < m_pMeshLoader->NF(); i++)
 	{
@@ -269,6 +270,8 @@ void LaiEngine::Graphics::Mesh::InterpretVertexData()
 			const unsigned int index = f.v[j];
 
 			m_indices.push_back(index);
+
+			LaiEngine::Graphics::VertexFormats::sMesh vertex;
 
 			{
 				const cy::Point3f& pos = m_pMeshLoader->V(f.v[j]);
