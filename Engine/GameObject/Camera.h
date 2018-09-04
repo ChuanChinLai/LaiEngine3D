@@ -10,7 +10,7 @@ namespace LaiEngine
 
 		static Camera* main;
 
-		static bool Create(Camera*& o_camera);
+		static bool Create(Camera*& o_camera, const QVector3D& position, const QVector3D& target);
 
 		inline QVector3D GetPosition() const;
 		inline QVector3D GetRotation() const;
@@ -40,7 +40,7 @@ namespace LaiEngine
 
 	private:
 
-		Camera();
+		Camera(const QVector3D& position, const QVector3D& target);
 	
 		void UpdateViewMat();
 		void UpdateRotationMat();

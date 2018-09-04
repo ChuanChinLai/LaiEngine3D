@@ -7,13 +7,13 @@ const QVector3D LaiEngine::Camera::Backward = QVector3D( 0.0f,  0.0f,  1.0f );
 
 LaiEngine::Camera* LaiEngine::Camera::main = nullptr;
 
-bool LaiEngine::Camera::Create(Camera *& o_camera)
+bool LaiEngine::Camera::Create(Camera *& o_camera, const QVector3D& position, const QVector3D& target)
 {
 	if (o_camera != nullptr)
 		delete o_camera;
 
 
-	o_camera = new Camera;
+	o_camera = new Camera(position, target);
 	o_camera->m_projectedMat.perspective(45.0f, 1.0f, 0.0f, 1000.0f);
 
 
@@ -66,7 +66,7 @@ void LaiEngine::Camera::UpdateRotationMat()
 }
 
 
-LaiEngine::Camera::Camera() : m_speed(1.0f)
+LaiEngine::Camera::Camera(const QVector3D& position, const QVector3D& target) : m_speed(1.0f)
 {
-	LookAt(QVector3D(0, 0, 0), Forward, Up);
+	LookAt(position, target, Up);
 }

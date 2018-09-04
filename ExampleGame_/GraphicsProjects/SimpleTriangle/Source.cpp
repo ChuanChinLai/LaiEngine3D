@@ -34,6 +34,8 @@ LaiEngine::GameObject* pLightGameObject;
 
 LaiEngine::Camera* pCamera;
 
+static QVector3D cameraPosition = QVector3D(0.001f,10.0f, 0);
+static QVector3D lightPosition  = QVector3D(0.0f, 15.0f, 0.0f);
 
 LaiEngine::SimpleTriangle::SimpleTriangle(GLWidget* i_pGLWidget) : IScene(i_pGLWidget)
 {
@@ -48,12 +50,12 @@ LaiEngine::SimpleTriangle::~SimpleTriangle()
 bool LaiEngine::SimpleTriangle::Init()
 {
 	{
-		LaiEngine::Graphics::Effect::Create(pEffect, "Assets/Shaders/simple.vs", "Assets/Shaders/simple.fs");
+		LaiEngine::Graphics::Effect::Create(pEffect, "Assets/Shaders/teapot.vs", "Assets/Shaders/teapot.fs");
 	}
 
 
 //	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/nanosuit/nanosuit.obj"))
-	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/geometry/untitled.obj"))
+	if (LaiEngine::Graphics::Mesh::Create(pMesh, "Assets/Models/geometry/cube.obj"))
 	{
 		pMesh->BindShader(pEffect);
 	}
@@ -61,7 +63,7 @@ bool LaiEngine::SimpleTriangle::Init()
 
 	{
 		pLightGameObject = new LaiEngine::GameObject();
-		pLightGameObject->Transform->Position = QVector3D(0.0f, 4.0f, 1.5f);
+		pLightGameObject->Transform->Position = lightPosition;
 		pLightGameObject->AddComponent<LaiEngine::Light>();
 
 		pEffect->Bind();
@@ -78,10 +80,9 @@ bool LaiEngine::SimpleTriangle::Init()
 //	pGameObject->Transform->Rotation = QVector3D(-90, 0, 0);
 //	pGameObject->Transform->Scale = QVector3D(0.1f, 0.1f, 0.1f);
 
-	LaiEngine::Camera::Create(pCamera);
+	LaiEngine::Camera::Create(pCamera, cameraPosition, QVector3D(0, 0, 0));
 	pCamera->SetSpeed(1.0f);
 
-	pCamera->LookAt(QVector3D(0, 4.0f, 0), QVector3D(0, 0, 0), Camera::Up);
 //	pCamera->SetPosition(QVector3D(0, 200, 0));
 //	pCamera->SetRotation(QVector3D(-90, 0, 0));
 
@@ -125,11 +126,12 @@ bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 
 	if (event->key() == Qt::Key_W)
 	{
-		pCamera->SetRotation(pCamera->GetRotation() + QVector3D(1, 0, 0));
-		std::cout << pCamera->GetRotation() << std::endl;
+		lightPosition -= QVector3D(0, 0, 1);
+		std::cout << lightPosition << std::endl;
+		pLightGameObject->Transform->Position = lightPosition;
 
 		pEffect->Bind();
-		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
+		pEffect->SetUniformValue(pEffect->GetUniformLocation("lightPosition_worldSpace"), pLightGameObject->Transform->Position);
 		pEffect->UnBind();
 
 		return true;
@@ -137,48 +139,51 @@ bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 
 	if (event->key() == Qt::Key_S)
 	{
-		pCamera->SetRotation(pCamera->GetRotation() - QVector3D(1, 0, 0));
-		std::cout << pCamera->GetRotation() << std::endl;
+		lightPosition += QVector3D(0, 0, 1);
+		std::cout << lightPosition << std::endl;
+		pLightGameObject->Transform->Position = lightPosition;
 
 		pEffect->Bind();
-		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
+		pEffect->SetUniformValue(pEffect->GetUniformLocation("lightPosition_worldSpace"), pLightGameObject->Transform->Position);
 		pEffect->UnBind();
+
 		return true;
 	}
 
 	if (event->key() == Qt::Key_A)
 	{
-		pCamera->SetRotation(pCamera->GetRotation() + QVector3D(0, 1, 0));
-		std::cout << pCamera->GetRotation() << std::endl;
+		lightPosition -= QVector3D(1, 0, 0);
+		std::cout << lightPosition << std::endl;
+		pLightGameObject->Transform->Position = lightPosition;
 
 		pEffect->Bind();
-		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
+		pEffect->SetUniformValue(pEffect->GetUniformLocation("lightPosition_worldSpace"), pLightGameObject->Transform->Position);
 		pEffect->UnBind();
+
 		return true;
 	}
 
 	if (event->key() == Qt::Key_D)
 	{
-		pCamera->SetRotation(pCamera->GetRotation() - QVector3D(0, 1, 0));
-		std::cout << pCamera->GetRotation() << std::endl;
+		lightPosition += QVector3D(1, 0, 0);
+		std::cout << lightPosition << std::endl;
+		pLightGameObject->Transform->Position = lightPosition;
 
 		pEffect->Bind();
-		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
+		pEffect->SetUniformValue(pEffect->GetUniformLocation("lightPosition_worldSpace"), pLightGameObject->Transform->Position);
 		pEffect->UnBind();
+
 		return true;
 	}
 
 
-	static QVector3D position = QVector3D(3, 0, 0);
+	//Camera // 
 
 	if (event->key() == Qt::Key_I)
 	{
-		position += QVector3D(0, 1, 0);
-		std::cout << position << std::endl;
-
-//		QMatrix4x4 viewMat;
-//		viewMat.lookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
-		pCamera->LookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+		cameraPosition += QVector3D(0, 1, 0);
+		std::cout << cameraPosition << std::endl;
+		pCamera->LookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
 		pEffect->Bind();
 		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
@@ -189,12 +194,9 @@ bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 
 	if (event->key() == Qt::Key_K)
 	{
-		position -= QVector3D(0, 1, 0);
-		std::cout << position << std::endl;
-
-		//		QMatrix4x4 viewMat;
-		//		viewMat.lookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
-		pCamera->LookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+		cameraPosition -= QVector3D(0, 1, 0);
+		std::cout << cameraPosition << std::endl;
+		pCamera->LookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
 		pEffect->Bind();
 		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
@@ -204,12 +206,9 @@ bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 
 	if (event->key() == Qt::Key_J)
 	{
-		position -= QVector3D(1, 0, 0);
-		std::cout << position << std::endl;
-
-		//		QMatrix4x4 viewMat;
-		//		viewMat.lookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
-		pCamera->LookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+		cameraPosition -= QVector3D(1, 0, 0);
+		std::cout << cameraPosition << std::endl;
+		pCamera->LookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
 		pEffect->Bind();
 		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
@@ -219,20 +218,15 @@ bool LaiEngine::SimpleTriangle::KeyPressEvent(QKeyEvent * event)
 
 	if (event->key() == Qt::Key_L)
 	{
-		position += QVector3D(1, 0, 0);
-		std::cout << position << std::endl;
-
-		//		QMatrix4x4 viewMat;
-		//		viewMat.lookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
-		pCamera->LookAt(position, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+		cameraPosition += QVector3D(1, 0, 0);
+		std::cout << cameraPosition << std::endl;
+		pCamera->LookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0, 1, 0));
 
 		pEffect->Bind();
 		pEffect->SetUniformValue(pEffect->GetUniformLocation("cameraPosition_worldSpace"), pCamera->GetPosition());
 		pEffect->UnBind();
 		return true;
 	}
-
-
 
 
 	return false;

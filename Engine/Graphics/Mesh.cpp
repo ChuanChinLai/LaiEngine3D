@@ -255,8 +255,10 @@ void LaiEngine::Graphics::Mesh::InterpretObjData()
 
 void LaiEngine::Graphics::Mesh::InterpretVertexData()
 {
+	if (!m_vertices.empty())
+		m_vertices.clear();
 
-	std::vector<LaiEngine::Graphics::VertexFormats::sMesh> vertexData(m_pMeshLoader->NV());
+	unsigned int indexCount = 0;
 
 	for (unsigned int i = 0; i < m_pMeshLoader->NF(); i++)
 	{
@@ -269,28 +271,28 @@ void LaiEngine::Graphics::Mesh::InterpretVertexData()
 		{
 			const unsigned int index = f.v[j];
 
-			m_indices.push_back(index);
-
 			LaiEngine::Graphics::VertexFormats::sMesh vertex;
+
+			m_indices.push_back(indexCount++);
 
 			{
 				const cy::Point3f& pos = m_pMeshLoader->V(f.v[j]);
-				vertexData[index].Position = QVector3D(pos.x, pos.y, pos.z);
+				vertex.Position = QVector3D(pos.x, pos.y, pos.z);
 			}
 
 			{
 				const cy::Point3f& nor = m_pMeshLoader->VN(nf.v[j]);
-				vertexData[index].Normal = QVector3D(nor.x, nor.y, nor.z);
+				vertex.Normal = QVector3D(nor.x, nor.y, nor.z);
 			}
 
 			{
 				const cy::Point3f& uv = m_pMeshLoader->VT(tf.v[j]);
-				vertexData[index].UV = QVector3D(uv.x, uv.y, uv.z);
+				vertex.UV = QVector3D(uv.x, uv.y, uv.z);
 			}
+
+			m_vertices.push_back(vertex);
 		}
 	}
-
-	m_vertices = vertexData;
 }
 
 void LaiEngine::Graphics::Mesh::InterpretTextureData()
